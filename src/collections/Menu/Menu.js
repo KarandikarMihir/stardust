@@ -3,29 +3,33 @@ import cx from 'classnames'
 import React, { Children, cloneElement, PropTypes } from 'react'
 
 import {
-  AutoControlledComponent as Component
+  AutoControlledComponent as Component,
   getUnhandledProps,
   numberToWord,
   META,
   SUI,
+  useKeyOnly,
 } from '../../lib'
+import MenuHeader from './MenuHeader'
 import MenuItem from './MenuItem'
+
+const _meta = {
+  name: 'Menu',
+  type: META.TYPES.COLLECTION,
+  props: {
+    widths: SUI.WIDTHS,
+  },
+}
 
 /**
  * A menu displays grouped navigation actions.
  * */
 export default class Menu extends Component {
+  static _meta = _meta
+
   static autoControlledProps = [
     'activeIndex',
   ]
-
-  static _meta = {
-    name: 'Menu',
-    type: META.type.COLLECTION,
-    props: {
-      widths: SUI.WIDTHS,
-    },
-  }
 
   static propTypes = {
     /** Index of the currently active item. */
@@ -40,10 +44,17 @@ export default class Menu extends Component {
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.number,
 
+    /** onClick handler for MenuItem. */
+    onItemClick: PropTypes.func,
+
+    /** A vertical menu displays elements vertically. */
+    vertical: PropTypes.bool,
+
     /** A menu can have its items divided evenly. */
-    widths: PropTypes.oneOf(Menu._meta.props.widths),
+    widths: PropTypes.oneOf(_meta.props.widths),
   }
 
+  static Header = MenuHeader
   static Item = MenuItem
 
   state = {}
@@ -85,11 +96,12 @@ export default class Menu extends Component {
   }
 
   render() {
-    const { className, widths } = this.props
+    const { className, vertical, widths } = this.props
     const classes = cx(
       'ui',
       className,
       numberToWord(widths),
+      useKeyOnly(vertical, 'vertical'),
       'menu'
     )
     const rest = getUnhandledProps(Menu, this.props)
