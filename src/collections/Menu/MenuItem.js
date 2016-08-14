@@ -1,8 +1,11 @@
 import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
-import META from '../../utils/Meta'
-import { getUnhandledProps, useKeyOnly } from '../../utils/propUtils'
+import {
+  getUnhandledProps,
+  META,
+  useKeyOnly,
+} from '../../lib'
 
 function MenuItem(props) {
   const { active, children, className } = props
@@ -18,7 +21,7 @@ function MenuItem(props) {
 
 MenuItem._meta = {
   name: 'MenuItem',
-  type: META.type.collection,
+  type: META.type.COLLECTION,
   parent: 'Menu',
 }
 

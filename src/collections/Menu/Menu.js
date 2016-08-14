@@ -2,26 +2,28 @@ import _ from 'lodash'
 import cx from 'classnames'
 import React, { Children, cloneElement, PropTypes } from 'react'
 
-import AutoControlledComponent from '../../utils/AutoControlledComponent'
-import META from '../../utils/Meta'
-import numberToWord from '../../utils/numberToWord'
-import { getUnhandledProps } from '../../utils/propUtils'
-import * as sui from '../../utils/semanticUtils'
+import {
+  AutoControlledComponent as Component
+  getUnhandledProps,
+  numberToWord,
+  META,
+  SUI,
+} from '../../lib'
 import MenuItem from './MenuItem'
 
 /**
  * A menu displays grouped navigation actions.
  * */
-export default class Menu extends AutoControlledComponent {
+export default class Menu extends Component {
   static autoControlledProps = [
     'activeIndex',
   ]
 
   static _meta = {
     name: 'Menu',
-    type: META.type.collection,
+    type: META.type.COLLECTION,
     props: {
-      widths: sui.widths,
+      widths: SUI.WIDTHS,
     },
   }
 
